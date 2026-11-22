@@ -9,4 +9,16 @@
 <button>核对这份报价</button><p class="error" id="error" role="alert"></p></form></section>
 <section class="result" aria-live="polite"><p class="kicker">核算结果</p><h2>每平方米报价</h2><div class="value" id="unit">—</div><small>元 / ㎡</small><hr><h3>区间判断</h3><p id="comparison">录入面积与总价后即可核算。</p><h3>可能漏项</h3><p id="missing">勾选报价已写明的项目，查看还需确认的范围。</p></section></div>
 <section id="check"><p class="kicker">签约核对清单</p><div class="heading"><h2>常见增项陷阱</h2><span id="count"></span></div><div id="list"></div><div class="gate"><div><strong id="access"></strong><p id="benefit"></p></div><button id="toggle"></button></div></section></main>
-<dialog id="dialog"><form id="unlock"><h2>解锁全部 30 条</h2><p>输入购买完整版时收到的解锁码。</p><label>解锁码<input id="code" required autocomplete="off"></label><p id="invalid" class="error" role="alert"></p><div class="actions"><button>确认解锁</button><button class="secondary" type="button" id="close">取消</button></div></form></dialog></body></html>
+<dialog id="dialog"><form id="unlock"><h2>解锁全部 30 条</h2><p>输入购买完整版时收到的解锁码。</p><label>解锁码<input id="code" required autocomplete="off"></label><p id="invalid" class="error" role="alert"></p><div class="actions"><button>确认解锁</button><button class="secondary" type="button" id="close">取消</button></div></form></dialog><script>
+{
+  function record(event) {
+    fetch("https://api.countapi.xyz/hit/quote-tool/" + event, {
+      cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer"
+    }).catch(() => {});
+  }
+  record("pv");
+  document.getElementById("toggle").addEventListener("click", () => {
+    if (!unlocked) record("unlock");
+  }, true);
+}
+</script></body></html>
