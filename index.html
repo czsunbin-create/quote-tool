@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>装修报价核对器</title><link rel="stylesheet" href="style.css"><script defer src="app.js"></script>
+<body><header><div class="wrap brand"><b class="mark" aria-hidden="true">核</b> 装修核价手册 <a href="#check">核对清单</a></div></header>
+<main class="wrap"><div class="intro"><p class="kicker">签约前的预算核对</p><h1>装修报价核对器</h1><p>算清每平方米的价格，带着具体问题去核对施工报价。</p></div>
+<div class="grid"><section class="panel"><h2>录入报价</h2><form id="quote"><div class="pair"><label>房屋面积（㎡）<input id="area" type="number" required min=".01" step=".01"></label><label>报价单总价（元）<input id="price" type="number" required min=".01" step=".01"></label></div>
+<fieldset><legend>装修模式</legend><label><input type="radio" name="mode" value="半包" checked>半包</label> <label><input type="radio" name="mode" value="全包">全包</label></fieldset>
+<fieldset><legend>报价中已明确包含的项目</legend><div id="items"></div></fieldset>
+<fieldset><legend>当地参考单价（元/㎡，选填）</legend><p class="hint">取当地同模式、同面积口径、材料档次接近的报价，填写最低和最高单价。</p><div class="pair"><label>最低单价<input id="low" type="number" min=".01" step=".01"></label><label>最高单价<input id="high" type="number" min=".01" step=".01"></label></div></fieldset>
+<button>核对这份报价</button><p class="error" id="error" role="alert"></p></form></section>
+<section class="result" aria-live="polite"><p class="kicker">核算结果</p><h2>每平方米报价</h2><div class="value" id="unit">—</div><small>元 / ㎡</small><hr><h3>区间判断</h3><p id="comparison">录入面积与总价后即可核算。</p><h3>可能漏项</h3><p id="missing">勾选报价已写明的项目，查看还需确认的范围。</p></section></div>
+<section id="check"><p class="kicker">签约核对清单</p><div class="heading"><h2>常见增项陷阱</h2><span id="count"></span></div><div id="list"></div><div class="gate"><div><strong id="access"></strong><p id="benefit"></p></div><button id="toggle"></button></div></section></main>
+<dialog id="dialog"><form id="unlock"><h2>解锁全部 30 条</h2><p>输入购买完整版时收到的解锁码。</p><label>解锁码<input id="code" required autocomplete="off"></label><p id="invalid" class="error" role="alert"></p><div class="actions"><button>确认解锁</button><button class="secondary" type="button" id="close">取消</button></div></form></dialog></body></html>
