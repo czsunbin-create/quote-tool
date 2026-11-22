@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>装修报价核对器</title><link rel="stylesheet" href="style.css"><script defer src="app.js"></script>
-<body><header><div class="wrap brand"><b class="mark" aria-hidden="true">核</b> 装修核价手册 <a href="#check">核对清单</a></div></header>
+<body><div id="hit-counters" hidden><img src="https://hits.sh/quote-tool/pv.svg" alt="" referrerpolicy="no-referrer"></div><header><div class="wrap brand"><b class="mark" aria-hidden="true">核</b> 装修核价手册 <a href="#check">核对清单</a></div></header>
 <main class="wrap"><div class="intro"><p class="kicker">签约前的预算核对</p><h1>装修报价核对器</h1><p>算清每平方米的价格，带着具体问题去核对施工报价。</p></div>
 <div class="grid"><section class="panel"><h2>录入报价</h2><form id="quote"><div class="pair"><label>房屋面积（㎡）<input id="area" type="number" required min=".01" step=".01"></label><label>报价单总价（元）<input id="price" type="number" required min=".01" step=".01"></label></div>
 <fieldset><legend>装修模式</legend><label><input type="radio" name="mode" value="半包" checked>半包</label> <label><input type="radio" name="mode" value="全包">全包</label></fieldset>
@@ -11,14 +11,13 @@
 <section id="check"><p class="kicker">签约核对清单</p><div class="heading"><h2>常见增项陷阱</h2><span id="count"></span></div><div id="list"></div><div class="gate"><div><strong id="access"></strong><p id="benefit"></p></div><button id="toggle"></button></div></section></main>
 <dialog id="dialog"><form id="unlock"><h2>解锁全部 30 条</h2><p>输入购买完整版时收到的解锁码。</p><label>解锁码<input id="code" required autocomplete="off"></label><p id="invalid" class="error" role="alert"></p><div class="actions"><button>确认解锁</button><button class="secondary" type="button" id="close">取消</button></div></form></dialog><script>
 {
-  function record(event) {
-    fetch("https://api.countapi.xyz/hit/quote-tool/" + event, {
-      cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer"
-    }).catch(() => {});
-  }
-  record("pv");
   document.getElementById("toggle").addEventListener("click", () => {
-    if (!unlocked) record("unlock");
+    if (unlocked) return;
+    const img = new Image();
+    img.alt = "";
+    img.referrerPolicy = "no-referrer";
+    img.src = "https://hits.sh/quote-tool/unlock.svg";
+    document.getElementById("hit-counters").appendChild(img);
   }, true);
 }
 </script></body></html>
