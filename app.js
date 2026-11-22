@@ -1,6 +1,4 @@
 "use strict";
-// 更换常量即可更换口令。前端口令只用于离线展示控制。
-const UNLOCK_CODE = "HEJIA-30-Q7M9";
 const trades = ["水电", "泥瓦", "木工", "油漆", "安装"];
 const traps = [
  ["拆除按项打包","只写拆旧一项，没有墙体、地面及保留部分的边界。","能把要拆的部位、面积和保护范围列在图上吗？"],
@@ -74,7 +72,7 @@ el("quote").addEventListener("submit", e => {
 // 文件模式或隐私模式下存储可能不可用，本页仍可切换。
 const storageKey = "quote-tool-access-v1";
 let unlocked = false;
-try { unlocked = localStorage.getItem(storageKey) === UNLOCK_CODE; } catch {}
+try { unlocked = UNLOCK_CODES.has(localStorage.getItem(storageKey)); } catch {}
 function render() {
  const entries = unlocked ? traps : traps.slice(0,3);
  el("list").replaceChildren();
@@ -92,19 +90,20 @@ function render() {
  el("benefit").textContent = unlocked ? "30 条识别方法与询价问题均可查看。" : "解锁其余 27 条，逐项核对施工范围与费用。";
  el("toggle").textContent = unlocked ? "切换免费版" : "解锁全部";
 }
-function setAccess(value) {
- unlocked = value;
- try { if (value) localStorage.setItem(storageKey,UNLOCK_CODE); else localStorage.removeItem(storageKey); } catch {}
+function setAccess(code) {
+ unlocked = UNLOCK_CODES.has(code);
+ try { if (unlocked) localStorage.setItem(storageKey,code); else localStorage.removeItem(storageKey); } catch {}
  render();
 }
 el("toggle").onclick = () => {
- if (unlocked) { setAccess(false); return; }
+ if (unlocked) { setAccess(null); return; }
  el("code").value = ""; el("invalid").textContent = ""; el("dialog").showModal(); el("code").focus();
 };
 el("close").onclick = () => el("dialog").close();
 el("unlock").onsubmit = e => {
  e.preventDefault();
- if (el("code").value.trim() !== UNLOCK_CODE) { el("invalid").textContent = "解锁码不匹配，请核对后重试。"; return; }
- setAccess(true); el("dialog").close();
+ const code = el("code").value.trim();
+ if (!UNLOCK_CODES.has(code)) { el("invalid").textContent = "解锁码不匹配，请核对后重试。"; return; }
+ setAccess(code); el("dialog").close();
 };
 render();
